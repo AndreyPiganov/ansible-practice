@@ -1,7 +1,0 @@
-- hosts: appservers
-  become: yes
-  tasks:
-    - name: remove git
-      ansible.builtin.apt:
-        name: git
-        state: absent

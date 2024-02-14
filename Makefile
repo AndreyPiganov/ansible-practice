@@ -12,3 +12,5 @@ check-main-ci:
 	ansible-playbook --check playbookMain.yml -i inventory.ini -t ci
 main-ci:
 	ansible-playbook playbookMain.yml -i inventory.ini -t ci
+nginx:
+	ansible-playbook playbookNginx.yml -i inventory.ini
