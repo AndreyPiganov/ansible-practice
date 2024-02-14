@@ -1,0 +1,47 @@
+- hosts: appservers
+  become: yes
+  tasks:
+    - name: update apt-get
+      apt:
+        upgrade: dist
+        force_apt_get: yes
+      tags: apt
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+      tags: [ci,git]
+    - name: intall make
+      ansible.builtin.apt:
+        name: make
+        state: present
+        update_cache: yes
+      tags: [ci,make]
+    - name: install nodejs
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+        update_cache: yes
+      tags: [ci,nodejs]
+    - name: create user arya
+      ansible.builtin.user :
+        name: arya
+        group: developers
+        uid: 3
+        append: yes
+      tags: arya
+    - name: create user sansa
+      ansible.builtin.user :
+        name: arya
+        group: developers
+        uid: 2
+        append: yes
+      tags: sansa
+    - name: create user tirion
+      ansible.builtin.user :
+        name: arya
+        groups: admins,developers
+        uid: 1
+        append: yes
+      tags: [apt,tirion]
