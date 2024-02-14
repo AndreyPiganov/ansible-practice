@@ -27,21 +27,17 @@
     - name: create user arya
       ansible.builtin.user :
         name: arya
-        group: developers
-        uid: 3
+        # group: developers
         append: yes
       tags: arya
     - name: create user sansa
       ansible.builtin.user :
         name: arya
-        group: developers
-        uid: 2
+        # group: developers
         append: yes
       tags: sansa
     - name: create user tirion
       ansible.builtin.user :
         name: arya
-        groups: admins,developers
-        uid: 1
         append: yes
       tags: [apt,tirion]
