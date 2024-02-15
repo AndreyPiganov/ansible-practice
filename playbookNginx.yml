@@ -3,6 +3,7 @@
   vars:
     nginx_port: 8080
     root_dir: /usr/share/nginx
+    nginx_dir: /etc/nginx
   tasks:
     - name: install nginx
       ansible.builtin.apt:
@@ -10,8 +11,8 @@
         state: latest
         update_cache: yes
     - name: update nginx html
-      ansible.builtin.copy:
-        src: files/index.html
+      ansible.builtin.template:
+        src: files/index.html.j2
         dest: "{{root_dir}}/html/index.html"
       notify:
       - restart nginx
