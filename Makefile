@@ -5,7 +5,7 @@ install-git:
 remove-git:
 	ansible-playbook playbookRemove.yml -i inventory.ini
 ssh-connect:
-	ssh terris@158.160.22.126
+	ssh terris@84.252.143.233
 main:
 	ansible-playbook playbookMain.yml -i inventory.ini
 check-main-ci:
