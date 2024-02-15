@@ -2,7 +2,7 @@
   become: yes
   vars:
     nginx_port: 8080
-    root_dir: /usr/share/nginx/html
+    root_dir: /usr/share/nginx
   tasks:
     - name: install nginx
       ansible.builtin.apt:
@@ -12,7 +12,7 @@
     - name: update nginx html
       ansible.builtin.copy:
         src: files/index.html
-        dest: "{{root_dir}}/index.html"
+        dest: "{{root_dir}}/html/index.html"
       notify:
       - restart nginx
     - name: update nginx conf
