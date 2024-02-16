@@ -1,0 +1,30 @@
+- hosts: all
+  become: yes
+  gather_facts: yes
+  vars: 
+    user: {name: test, email: test@example.com}
+  tasks:
+    - name: create user
+      ansible.builtin.user:
+        name: "{{user.name}}"
+        create_home: yes
+        append: yes
+        state: present
+    - name: install git
+      block:
+        - name: install git on Ubuntu
+          ansible.builtin.apt:
+            name: git
+            state: present
+          when: ansible_distribution == 'Ubuntu'
+        - name: install git on CentOS
+          ansible.builtin.yum:
+            name: git
+            state: present
+          when: ansible_distribution == 'CentOS'
+    - name: create gitconfig for user
+      ansible.builtin.template:
+        src: templates/.gitconfig.j2
+        dest: "/home/{{user.name}}/.gitconfig"
+        owner: "{{user.name}}"
+        group: "{{user.name}}"
