@@ -1,11 +1,6 @@
 - hosts: appservers
   become: yes
   gather_facts: no
-  vars:
-    users:
-      - jaime
-      - sansa
-      - robert
   tasks:
     - name: update apt-get
       apt:
@@ -30,8 +25,3 @@
         state: present
         update_cache: yes
       tags: [ci,nodejs]
-    - name: create users
-      ansible.builtin.user:
-        name: "{{ item }}"
-      loop: "{{users}}"
-      become: yes
