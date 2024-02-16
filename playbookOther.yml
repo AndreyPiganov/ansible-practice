@@ -13,17 +13,30 @@
         append: yes
         state: present
     - name: install git
-      block:
-        - name: install git on Ubuntu
-          ansible.builtin.apt:
-            name: git
-            state: present
-          when: ansible_distribution == 'Ubuntu'
-        - name: install git on CentOS
-          ansible.builtin.yum:
-            name: git
-            state: present
-          when: ansible_distribution == 'CentOS'
+      ansible.builtin.package:
+        name: git
+        state: present
+    - name: install cowsay
+      ansible.builtin.package:
+        name: cowsay
+        state: present
+        update_cache: yes
+    #   when: ansible_distribution == 'Ubuntu'
+    # - name: install EPEL repository on CentOS
+    #   ansible.builtin.yum:
+    #     name: epel-release
+    #     state: present
+    #     update_cache: yes
+    #   when: ansible_distribution == 'CentOS'
+    # - name: install cowsay CentOS
+    #   ansible.builtin.yum:
+    #     name: cowsay
+    #     update_cache: yes
+    #     state: present
+    #   when: ansible_distribution == 'CentOS'
+    - name: cowsay
+      ansible.builtin.shell: "cowsay 'This is server {{ansible_hostname}}!'"
+      register: cow
     - name: create gitconfig for user
       ansible.builtin.template:
         src: templates/.gitconfig.j2
