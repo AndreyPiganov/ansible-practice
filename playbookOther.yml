@@ -3,6 +3,8 @@
   gather_facts: yes
   vars: 
     user: {name: test, email: test@example.com}
+    str: "This is server {{ansible_hostname}}!"
+    date: "{{ansible_date_time}}"
   tasks:
     - name: create user
       ansible.builtin.user:
@@ -26,5 +28,11 @@
       ansible.builtin.template:
         src: templates/.gitconfig.j2
         dest: "/home/{{user.name}}/.gitconfig"
+        owner: "{{user.name}}"
+        group: "{{user.name}}"
+    - name: create html file
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: "/home/{{user.name}}/index.html"
         owner: "{{user.name}}"
         group: "{{user.name}}"
