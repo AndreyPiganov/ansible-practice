@@ -11,6 +11,8 @@
       ansible.builtin.user:
         name: "{{ item.name }}"
         state: present
+        append: yes
+        create_home: yes
       loop: "{{users}}"
     - name: add configs for users
       ansible.builtin.template:
@@ -27,25 +29,9 @@
     #     state: directory
     #     mode: "0644"
     #   loop: "{{users}}"
-    # - name: create 2048 bit key 
-    #   ansible.builtin.user:
-    #     name: "{{item.name}}"
-    #     generate_ssh_key: yes
-    #     ssh_key_bits: 2048
-    #     ssh_key_file: .ssh/id_rsa
-    #   loop: "{{users}}"
-    - name: Install OpenSSH server
-      ansible.builtin.apt:
-        name: openssh-server
-        state: present
-    - name: create keys each users
+    - name: create auth keys each users
       authorized_key:
         user: "{{item.name}}"
         key: "{{lookup('file', 'files/my_key.pub')}}"
         state: present
       loop: "{{users}}"
-    # - name: copy key each users
-    #   ansible.builtin.copy:
-    #     src: files/my_key.pub
-    #     dest: "/home/{{item.name}}/.ssh/authorized_keys"
-    #   loop: "{{users}}"

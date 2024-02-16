@@ -2,6 +2,10 @@
   become: yes
   gather_facts: no
   tasks:
+    - name: Install OpenSSH server
+      ansible.builtin.apt:
+        name: openssh-server
+        state: present
     - name: update apt-get
       apt:
         upgrade: dist
